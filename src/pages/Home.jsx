@@ -48,6 +48,8 @@ const Home = () => {
   const sceleton = [...new Array(6)].map((_, i) => <Skeleton key={i} />);
   const pizzas = items.map((obj) => (<PizzaBlock key={obj.id} {...obj} />));
 
+  console.log(currentPage)
+
   return (
     <div className="container">
       <div className="content__top">

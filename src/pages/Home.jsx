@@ -3,13 +3,13 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 
 
+import { setCategoryId, setCurrentPage } from '../redux/slices/filterSlice';
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
-import { setCategoryId, setCurrentPage } from '../redux/slices/filterSlice';
 
 
 const Home = () => {
@@ -24,9 +24,9 @@ const Home = () => {
     dispatch(setCategoryId(id));
   };
 
-  const onChangePage = number => {
+  const onChangePage = (number) => {
     dispatch(setCurrentPage(number));
-  }
+  };
 
   useEffect(() => {
     setIsLoading(true)
@@ -36,13 +36,12 @@ const Home = () => {
     const search = searchValue ? `&search=${searchValue}` : '';
 
     axios
-      .get(
-        `https://63cd5c94d4d47898e397781a.mockapi.io/items?page=${currentPage}&limit=4&${category}${sortBy}${search}`
-      )
-      .then(res => {
-        setItems(res.data);
+      .get(`https://663778c1288fedf693806759.mockapi.io/items?page=${currentPage}&limit=4&${category}${sortBy}${search}`)
+      .then((arr) => {
+        setItems(arr.data);
         setIsLoading(false);
-      })
+      });
+
     window.scrollTo(0, 0);
   }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 

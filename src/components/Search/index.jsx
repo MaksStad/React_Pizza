@@ -1,33 +1,32 @@
-import React, { useCallback, useContext, useRef, useState } from 'react'
-import debounce from 'lodash.debounce';
+import React, { useContext, useRef, useState, useCallback } from 'react';
+import debounce from 'lodash/debounce';
 import { SearchContext } from '../../App';
 
 import styles from './Search.module.scss'
 
 const Search = () => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState('')
   const { setSearchValue } = useContext(SearchContext)
-  const inputRef = useRef();
+  const inputRef = useRef()
 
-  const onClickCleat = () => {
+  const onClickClear = () => {
     setSearchValue('');
     setValue('');
     inputRef.current.focus();
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const updateSearchValue = useCallback(
     debounce((str) => {
-      console.log(str);
       setSearchValue(str);
-    }, 500),
-    [],
-  )
+    }, 200),
+    [setSearchValue],
+  );
 
-  const onChangeInput = event => {
+  const onChangeInput = (event) => {
     setValue(event.target.value);
     updateSearchValue(event.target.value);
-  }
+  };
+
 
   return (
     <div className={styles.root}>
@@ -38,7 +37,7 @@ const Search = () => {
         <path d="M18,10a8,8,0,1,0-3.1,6.31l6.4,6.4,1.41-1.41-6.4-6.4A8,8,0,0,0,18,10Zm-8,6a6,6,0,1,1,6-6A6,6,0,0,1,10,16Z" />
       </svg>
       {value && <svg
-        onClick={onClickCleat}
+        onClick={onClickClear}
         className={styles.close}
         height="48"
         viewBox="0 0 48 48"
@@ -51,7 +50,8 @@ const Search = () => {
         ref={inputRef}
         value={value}
         onChange={onChangeInput}
-        className={styles.input} placeholder="Поиск пиццы ..." />
+        className={styles.input}
+        placeholder="Поиск пиццы ..." />
     </div >
   );
 }
